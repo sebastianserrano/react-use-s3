@@ -7,7 +7,7 @@ function onError(){
 }
 
 function onLoad(apiVersion){
-  window.s3 = window.AWS.s3({apiVersion: apiVersion})
+  window.s3 = new window.AWS.S3({apiVersion: apiVersion})
 }
 
 function s3(props){
@@ -16,8 +16,8 @@ function s3(props){
   return(
     <Script
       url="https://sdk.amazonaws.com/js/aws-sdk-2.480.0.min.js"
-      onError={onError}
-      onLoad={onLoad(apiVersion ? apiVersion : '2006-03-01')}
+      onError={() => onError()}
+      onLoad={() => onLoad(apiVersion ? apiVersion : '2006-03-01')}
     /> 
   )
 }
