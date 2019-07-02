@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to react-s3 👋</h1>
 <p align="center">
-  <img src="https://gifs.com/gif/E8K6km" alt="React S3"/>
+  <img src="https://j.gifs.com/E8K6km.gif" alt="React S3"/>
 </p>
 <p>
   <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
