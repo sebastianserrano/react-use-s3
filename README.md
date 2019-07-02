@@ -1,4 +1,6 @@
-<img src="/docs/react-s3.gif" alt="React S3"/>
+<p align="center">
+  <img src="/docs/react-s3.gif" alt="React S3"/>
+</p>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
