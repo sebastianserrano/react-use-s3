@@ -5,6 +5,7 @@
 <p>
   <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
 </p>
+
 > React custom hooks for uploading files to a s3 bucket with progress showing abilities
 
 ## Install
