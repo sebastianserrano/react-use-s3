@@ -1,5 +1,5 @@
 <h1 align="center">Welcome to react-s3 👋</h1>
-<p>
+<p align="center">
   <img src="/docs/react-s3.gif" alt="React S3"/>
 </p>
 <p>
