@@ -1,29 +1,43 @@
-import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useDropzone } from 'react-dropzone';
 
 function FilePicker(props) {
-  const { setFile } = props;
+  const { fileName, setFile, setFileName } = props;
 
-  const onDrop = useCallback(acceptedFiles => {
-    const reader = new FileReader()
+  const onDrop = useCallback((acceptedFiles) => {
+    const reader = new FileReader();
 
-    reader.onabort = () => console.log('file reading was aborted')
-    reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-      const binaryFile = reader.result
-      setFile(binaryFile)
-    }
+      const binaryFile = reader.result;
+      setFile(binaryFile);
+    };
 
-    acceptedFiles.forEach(file => reader.readAsBinaryString(file))
-  }, [setFile])
-  const {getRootProps, getInputProps } = useDropzone({onDrop})
+    acceptedFiles.forEach((file) => {
+      setFileName(file.name);
+      return reader.readAsBinaryString(file);
+    });
+  }, [setFile, setFileName]);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
+    <div id="file-picker" {...getRootProps()}>
+      <div className="container-fluid inherit-height">
+        <input {...getInputProps()} />
+        <div className="row align-content-center inherit-height">
+          <p className="text-center" id="file-picker-title">
+            {fileName !== '' ? fileName : 'Drag n drop a file here, or click to select file' }
+          </p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
+
+FilePicker.propTypes = {
+  fileName: PropTypes.string.isRequired,
+  setFile: PropTypes.func.isRequired,
+  setFileName: PropTypes.func.isRequired,
+};
 
 export default FilePicker;
