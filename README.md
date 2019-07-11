@@ -26,10 +26,10 @@ const [loaded, load] = useState(false); // useState hook to indicate to parent c
 useAWSScript({ load, credentials: { accessKeyId: '', secretAccessKey: '' } });
 
 const bucket = 'your s3 bucket name here';
-const file = binary file;
-const fileName = 'your file name here';
-const setFileLocation = callback function to indicate the file uri from aws;
-const setProgress = callback function to indicate current upload progress;
+const [file, setFile] = useState('');
+const [fileName, setFileName] = useState('');
+const [fileLocation, setFileLocation] = useState('');
+const [progress, setProgress] = useState('In Progress');
 
 const handleClick = useAWSUploadWithFile({
   bucket: 'bucket',
