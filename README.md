@@ -10,7 +10,9 @@
 
 ## Install
 
+```sh
 npm i react-use-s3
+```
 
 ## Usage
 
