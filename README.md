@@ -21,15 +21,15 @@ npm i react-use-s3
 import { useAWSScript, useAWSUploadWithFile } from 'react-use-s3'; //ES6
 
 const [loaded, load] = useState(false); // useState hook to indicate to parent component when the 
-					   script has successfully loaded
+					// script has successfully loaded
 
 useAWSScript({ load, credentials: { accessKeyId: '', secretAccessKey: '' } });
 
 const bucket = 'your s3 bucket name here';
-const [file, setFile] = useState('');
-const [fileName, setFileName] = useState('');
-const [fileLocation, setFileLocation] = useState('');
-const [progress, setProgress] = useState('In Progress');
+const file = 'your binary string file here'
+const fileName = 'your file name here';
+const [fileLocation, setFileLocation] = useState(''); //useState hook to indicate file uri when upload is complete
+const [progress, setProgress] = useState('In Progress'); //useState hook to indicate progress of file while uploading
 
 const handleClick = useAWSUploadWithFile({
   bucket: 'bucket',
