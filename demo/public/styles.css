@@ -1,0 +1,41 @@
+body {
+  background-color: darkgray;
+}
+
+#main-container {
+  flex: 1;
+	display: flex; /* establish flex container */
+	flex-direction: column; /* make main-axis vertical */
+	justify-content: center; /* align items vertically, in this case */
+  min-height: 100vh;
+}
+
+.inherit-height {
+  height: inherit;
+}
+
+#title {
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+#file-picker {
+  height: 20em;
+  background-color: azure;
+  border-radius: 5px;
+}
+
+#file-picker p {
+  font-size: 1.25em;
+}
+
+#file-picker-title {
+  width: 100%;
+}
+
+#upload-button {
+  width: 50%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
