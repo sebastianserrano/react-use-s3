@@ -8,6 +8,38 @@
 
 > React custom hooks for uploading files to a s3 bucket with progress showing abilities
 
+## Install
+
+npm i react-use-s3
+
+## Usage
+
+```javascript
+
+import { useAWSScript, useAWSUploadWithFile } from 'react-use-s3'; //ES6
+
+const [loaded, load] = useState(false); // useState hook to indicate to parent component when the 
+					   script has successfully loaded
+
+useAWSScript({ load, credentials: { accessKeyId: '', secretAccessKey: '' } });
+
+const bucket = 'your s3 bucket name here';
+const file = binary file;
+const fileName = 'your file name here';
+const setFileLocation = callback function to indicate the file uri from aws;
+const setProgress = callback function to indicate current upload progress;
+
+const handleClick = useAWSUploadWithFile({
+  bucket: 'bucket',
+  file,
+  fileName,
+  setFileLocation,
+  setProgress,
+});
+
+<button onClick={() => handleClick()}> My Upload File Button </button>
+
+```
 ## Demo
 
 This demo implies that you have the following configuration on your s3 bucket before upload:
@@ -76,7 +108,7 @@ docker build -t react-s3-demo .
 docker run -it -p 8080:80 react-s3-demo
 ```
 At this point, all you have to do is go to localhost:8080 in your browser and there you go. You can
-upload your files to s3 bucket
+upload your files to s3 your bucket while having the ability to show progress
 
 ## Author
 
