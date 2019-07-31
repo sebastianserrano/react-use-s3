@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to react-s3 👋</h1>
 <p align="center">
-  <img src="/docs/react-s3.gif" alt="React S3"/>
+  <img src="/docs/react-s3-v2.gif" alt="React S3"/>
 </p>
 <p>
   <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
@@ -18,24 +18,18 @@ npm i react-use-s3
 
 ```javascript
 
-import { useAWSScript, useAWSUploadWithFile } from 'react-use-s3'; //ES6
+import useUploadS3WithPresignedUrl from 'react-use-s3'; //ES6
 
-const [loaded, load] = useState(false); // useState hook to indicate to parent component when the 
-					// script has successfully loaded
-
-useAWSScript({ load, credentials: { accessKeyId: '', secretAccessKey: '' } });
-
-const bucket = 'your s3 bucket name here';
-const file = 'your binary string file here'
-const fileName = 'your file name here';
-const [fileLocation, setFileLocation] = useState(''); //useState hook to indicate file uri when upload is complete
+const url = 'your presigned url here';
+const file = { name: '', type: '', data: '' }
 const [progress, setProgress] = useState('In Progress'); //useState hook to indicate progress of file while uploading
+const [response, setResponse] = useState(''); //useState hook to indicate upload response when 
+					      //request is done whether is successful or not
 
-const handleClick = useAWSUploadWithFile({
-  bucket: 'bucket',
+const handleClick = useUploadS3WithPresignedUrl({
+  url,
   file,
-  fileName,
-  setFileLocation,
+  setResponse,
   setProgress,
 });
 
@@ -83,10 +77,6 @@ CORS:
 </CORSConfiguration>
 ```
 
-In order to use this demo, the credentials used by the 'useAWSScript' custom hook in the main App
-file have to be changed to your personal keys. Also, set your bucket name for the 'useAWSUploadWithFile' 
-custom hook on line 16 of the UploadFileButton. This demo uses the latest minified version of the aws js sdk which at the moment is 2.480.0. 
-
 In order to install and run the demo app locally you can do the following:
 
 ```sh
@@ -102,8 +92,7 @@ npm run start
 ```
 
 So why the Dockerfile? It was running on my machine said every dev. If you wish to run the demo app
-on a container, all you have to do is again, set your credentials in the main App and 
-set your bucket name on line 16 of the UploadFileButton. This will change in a future version of the demo, then:
+on a container, all you have to do is the following:
 
 ```sh
 docker build -t react-s3-demo .
@@ -112,12 +101,9 @@ docker run -it -p 8080:80 react-s3-demo
 At this point, all you have to do is go to localhost:8080 in your browser and there you go. You can
 upload your files to s3 your bucket while having the ability to show progress
 
-## Author
+## Code Style
+```
+eslint-config-standard
+```
 
-👤 **Sebastian Serrano**
-
-* Github: [@sebastianserrano](https://github.com/sebastianserrano)
-
-## Show your support
-
-Give a ⭐️ if this project helped you !
+[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
