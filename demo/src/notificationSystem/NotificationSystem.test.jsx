@@ -1,28 +1,40 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import 'jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import NotificationSystem from './NotificationSystem';
 
 afterEach(cleanup);
 
 describe('Notification System', () => {
-  it('notification system should be in the document', () => {
-    const fileLocation = '';
-    const { container } = render(<NotificationSystem fileLocation={fileLocation}/>);
-    const notificationSystem = container.querySelector('.notifications-wrapper');
+  it('notification system should render a level \'info\' notification upon successful upload', () => {
+    const response = {
+      status: 200,
+      responseText: 'https://lambda-s3-0.s3.us-east-2.amazonaws.com/pic.jpeg',
+    };
+    const { rerender, container } = render(<NotificationSystem response={response} />);
 
-    expect(notificationSystem).toBeInTheDocument();
+    rerender(<NotificationSystem response={response} />);
+
+    const notificationTitle = container.querySelector('.notification-title');
+    const notificationMessage = container.querySelector('.notification-message');
+
+    expect(notificationTitle).toHaveTextContent('File location');
+    expect(notificationMessage).toHaveTextContent(response.responseText);
   });
-  it('notification system should render notification upon non-empty file location string', () => {
-    const { rerender, getByText } = render(<NotificationSystem fileLocation="" />);
 
-    const fileLocation = 'some location';
-    rerender(<NotificationSystem fileLocation={fileLocation} />);
+  it('notification system should render a level \'error\' notification bad request upload', () => {
+    const response = {
+      status: 403,
+      responseText: 'Upload server error, please check your presigned url',
+    };
+    const { rerender, container } = render(<NotificationSystem response={response} />);
 
-    const notificationTitle = getByText('File Location');
-    const notificationMessage = getByText(fileLocation);
+    rerender(<NotificationSystem response={response} />);
 
-    expect(notificationTitle).toBeInTheDocument();
-    expect(notificationMessage).toBeInTheDocument();
+    const notificationTitle = container.querySelector('.notification-title');
+    const notificationMessage = container.querySelector('.notification-message');
+
+    expect(notificationTitle).toHaveTextContent('Something went wrong');
+    expect(notificationMessage).toHaveTextContent(response.responseText);
   });
 });

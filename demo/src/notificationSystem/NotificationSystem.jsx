@@ -9,14 +9,23 @@ class NotificationSystem extends React.Component {
   }
 
   componentDidUpdate() {
-    const { fileLocation } = this.props;
-    const notification = this.notificationSystem.current;
+    const { response } = this.props;
+    const { status, responseText } = response;
 
-    if (fileLocation !== '') {
-      notification.addNotification({
-        title: 'File Location',
-        message: fileLocation,
+    const notificationSystem = this.notificationSystem.current;
+
+    if (status === 200) {
+      notificationSystem.addNotification({
+        title: 'File location',
+        message: responseText,
         level: 'info',
+        position: 'tc',
+      });
+    } else if (status !== 0) {
+      notificationSystem.addNotification({
+        title: 'Something went wrong',
+        message: responseText,
+        level: 'error',
         position: 'tc',
       });
     }
@@ -24,13 +33,13 @@ class NotificationSystem extends React.Component {
 
   render() {
     return (
-      <ReactNotificationSystem ref={this.notificationSystem} />
+      <ReactNotificationSystem data-testid="notification-system" ref={this.notificationSystem} />
     );
   }
 }
 
 NotificationSystem.propTypes = {
-  fileLocation: PropTypes.string.isRequired,
+  response: PropTypes.object.isRequired,
 };
 
 export default NotificationSystem;

@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useAWSUploadWithFile } from 'react-use-s3';
+import useUploadS3WithPresignedUrl from 'react-use-s3';
 
 function UploadFileButton(props) {
   const {
+    url,
     progress,
-    scriptStatus,
     file,
-    fileName,
-    setFileLocation,
+    setResponse,
     setProgress,
   } = props;
 
-  const handleClick = useAWSUploadWithFile({
-    bucket: 'bucket',
+  const handleClick = useUploadS3WithPresignedUrl({
+    url,
     file,
-    fileName,
-    setFileLocation,
+    setResponse,
     setProgress,
   });
 
@@ -24,7 +22,7 @@ function UploadFileButton(props) {
     <div className="container-fluid">
       <div className="row justify-content-center">
         <button
-          disabled={!scriptStatus || false}
+          disabled={!url}
           type="button"
           className="btn btn-primary btn-block"
           id="upload-button"
@@ -38,11 +36,10 @@ function UploadFileButton(props) {
 }
 
 UploadFileButton.propTypes = {
+  url: PropTypes.string.isRequired,
   progress: PropTypes.string.isRequired,
-  scriptStatus: PropTypes.bool.isRequired,
-  file: PropTypes.string.isRequired,
-  fileName: PropTypes.string.isRequired,
-  setFileLocation: PropTypes.func.isRequired,
+  file: PropTypes.object.isRequired,
+  setResponse: PropTypes.func.isRequired,
   setProgress: PropTypes.func.isRequired,
 };
 

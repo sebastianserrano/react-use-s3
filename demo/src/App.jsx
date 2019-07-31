@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
-import { useAWSScript } from 'react-use-s3';
+import PresignedUrlInput from './presignedUrlInput/PresignedUrlInput';
 import FilePicker from './filePicker/FilePicker';
 import UploadFileButton from './uploadFileButton/UploadFileButton';
 import NotificationSystem from './notificationSystem/NotificationSystem';
 import Confetti from './confetti/Confetti';
 
 function App() {
-  const [loaded, load] = useState(false);
-  const [file, setFile] = useState('');
-  const [fileName, setFileName] = useState('');
-  const [fileLocation, setFileLocation] = useState('');
+  const [file, setFile] = useState({ name: '', type: '', data: '' });
+  const [presignedUrl, setPresignedUrl] = useState('');
+  const [response, setResponse] = useState({ status: 0, responseText: '' });
   const [progress, setProgress] = useState('In Progress');
-
-  useAWSScript({ load, credentials: { accessKeyId: '', secretAccessKey: '' } });
 
   return (
     <div className="container-fluid text-center" id="main-container">
-      <NotificationSystem fileLocation={fileLocation} />
-      {fileLocation !== '' ? <Confetti /> : null}
-      <div className="row">
+      <NotificationSystem response={response} />
+      {response.status === 200 ? <Confetti /> : null}
+      <div className="row justify-content-center">
         <h1 className="text-center" id="title">React S3</h1>
       </div>
       <div className="row justify-content-center">
-        <div className="col-lg-6">
-          <FilePicker fileName={fileName} setFile={setFile} setFileName={setFileName} />
+        <div className="col-lg-5 col-10">
+          <PresignedUrlInput setPresignedUrl={setPresignedUrl} />
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-lg-6 col-sm-11">
+          <FilePicker setFile={setFile} />
           <UploadFileButton
+            url={presignedUrl}
             progress={progress}
-            scriptStatus={loaded}
             file={file}
-            fileName={fileName}
-            setFileLocation={setFileLocation}
+            setResponse={setResponse}
             setProgress={setProgress}
           />
         </div>
