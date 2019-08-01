@@ -3,7 +3,7 @@
   <img src="/docs/react-s3-v2.gif" alt="React S3"/>
 </p>
 <p>
-  <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/version-2.0.8-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > React custom hooks for uploading files to a s3 bucket with progress showing abilities
@@ -23,7 +23,20 @@ import useUploadS3WithPresignedUrl from 'react-use-s3'; //ES6
 const url = 'your presigned url here';
 const file = { name: '', type: '', data: '' }
 const [progress, setProgress] = useState('In Progress'); //useState hook to indicate progress of file while uploading
-const [response, setResponse] = useState(''); //useState hook to indicate upload response when 
+const [response, setResponse] = useState({ status: 0, responseText: '' }); //useState hook to indicate upload response when 
+					      			           //request is done whether is successful or not
+
+//Upon successful upload request, setResponse will set the response as:
+{
+  status: 200,
+  responseText: 'https://{bucket}.{region}.amazonaws.com/{fileName}.{fileExtension}'
+}
+
+//Upon unsucessful upload request, setResponse will set the response as:
+{
+  status: 403,
+  responseText: 'Upload server error, please check your presigned url'
+}
 					      //request is done whether is successful or not
 
 const handleClick = useUploadS3WithPresignedUrl({
