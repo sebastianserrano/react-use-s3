@@ -37,7 +37,6 @@ const [response, setResponse] = useState({ status: 0, responseText: '' }); //use
   status: 403,
   responseText: 'Upload server error, please check your presigned url'
 }
-					      //request is done whether is successful or not
 
 const handleClick = useUploadS3WithPresignedUrl({
   url,
